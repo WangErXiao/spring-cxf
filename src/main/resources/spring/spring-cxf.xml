@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns="http://www.springframework.org/schema/beans"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:bean="http://www.springframework.org/schema/context"
+       xmlns:jaxws="http://cxf.apache.org/jaxws"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+       http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd">
+
+    <!-- biz service-->
+    <bean id="helloService" class="com.yao.service.impl.HelloServiceImpl"/>
+
+    <!--web service服务定义-->
+    <import resource="classpath:META-INF/cxf/cxf.xml"/>
+    <import resource="classpath:META-INF/cxf/cxf-extension-xml.xml"/>
+    <import resource="classpath:META-INF/cxf/cxf-servlet.xml"/>
+    <bean id="aegisBean" class="org.apache.cxf.aegis.databinding.AegisDatabinding" />
+    <bean id="jaxWsServiceFactoryBean" class="org.apache.cxf.jaxws.support.JaxWsServiceFactoryBean" scope="prototype">
+        <property name="wrapped" value="true" />
+        <property name="dataBinding" ref="aegisBean" />
+    </bean>
+
+    <!-- export service -->
+    <jaxws:endpoint id="cxfHelloService" implementor="#helloService" address="/helloService">
+        <jaxws:serviceFactory>
+            <ref bean="jaxWsServiceFactoryBean" />
+        </jaxws:serviceFactory>
+    </jaxws:endpoint>
+
+</beans>
