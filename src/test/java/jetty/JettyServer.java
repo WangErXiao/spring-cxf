@@ -11,7 +11,7 @@ import org.eclipse.jetty.webapp.WebAppContext;
 public class JettyServer {
 
     /** port */
-    private int port = 9999;
+    private int port = 9988;
 
     protected String charset = "UTF-8";
 

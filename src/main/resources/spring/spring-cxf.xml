@@ -4,13 +4,17 @@
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:bean="http://www.springframework.org/schema/context"
        xmlns:jaxws="http://cxf.apache.org/jaxws"
+       xmlns:jaxrs="http://cxf.apache.org/jaxrs"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+       http://cxf.apache.org/jaxrs http://cxf.apache.org/schemas/jaxrs.xsd
        http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd">
 
     <!-- biz service-->
     <bean id="helloService" class="com.yao.service.impl.HelloServiceImpl"/>
-
+    <bean id="userService" class="com.yao.service.impl.UserServiceImpl"/>
+    <!--auth-->
+    <bean id="authorizationInInterceptor" class="com.yao.service.interceptor.AuthorizationInInterceptor"/>
     <!--web service服务定义-->
     <import resource="classpath:META-INF/cxf/cxf.xml"/>
     <import resource="classpath:META-INF/cxf/cxf-extension-xml.xml"/>
@@ -26,6 +30,25 @@
         <jaxws:serviceFactory>
             <ref bean="jaxWsServiceFactoryBean" />
         </jaxws:serviceFactory>
+        <jaxws:inInterceptors>
+            <ref bean="authorizationInInterceptor"/>
+        </jaxws:inInterceptors>
     </jaxws:endpoint>
+
+   <!-- <jaxrs:server id="userServer" address="/user">
+        <jaxrs:serviceBeans>
+            <ref bean="helloService"/>
+            <ref bean="userService"/>
+        </jaxrs:serviceBeans>
+        <jaxrs:inInterceptors>
+            <ref bean="authorizationInInterceptor"/>
+        </jaxrs:inInterceptors>
+        <jaxrs:extensionMappings>
+            <entry key="feed" value="application/atom+xml"/>
+            <entry key="json" value="application/json"/>
+            <entry key="xml" value="application/xml"/>
+            <entry key="html" value="text/html"/>
+        </jaxrs:extensionMappings>
+    </jaxrs:server>-->
 
 </beans>
