@@ -20,9 +20,9 @@ public class AuthorizationInInterceptor extends AbstractPhaseInterceptor<Message
     @Override
     public void handleMessage(Message message) throws Fault {
         HttpServletRequest request = (HttpServletRequest) message.get(AbstractHTTPDestination.HTTP_REQUEST);
-        String sign= request.getHeader("sign");
+        //String sign=request.getParameter("sign");
+        String sign=request.getHeader("sign");
         if("wangerxiao".equals(sign)){
-            //request.setAttribute("info","robin");
             System.out.println("succes--------");
         }else {
             throw new Fault(new IllegalAccessException("sign错误"));

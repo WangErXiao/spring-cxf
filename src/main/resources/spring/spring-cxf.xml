@@ -24,31 +24,31 @@
         <property name="wrapped" value="true" />
         <property name="dataBinding" ref="aegisBean" />
     </bean>
-
+    <bean id="jsonProvider" class="org.codehaus.jackson.jaxrs.JacksonJsonProvider" />
     <!-- export service -->
-    <jaxws:endpoint id="cxfHelloService" implementor="#helloService" address="/helloService">
+   <!-- <jaxws:endpoint id="cxfHelloService" implementor="#helloService" address="/helloService">
         <jaxws:serviceFactory>
             <ref bean="jaxWsServiceFactoryBean" />
         </jaxws:serviceFactory>
         <jaxws:inInterceptors>
             <ref bean="authorizationInInterceptor"/>
         </jaxws:inInterceptors>
-    </jaxws:endpoint>
-
-   <!-- <jaxrs:server id="userServer" address="/user">
+    </jaxws:endpoint>-->
+    <jaxrs:server id="restServer" address="/rest">
         <jaxrs:serviceBeans>
-            <ref bean="helloService"/>
-            <ref bean="userService"/>
+            <ref bean="helloService" />
         </jaxrs:serviceBeans>
         <jaxrs:inInterceptors>
-            <ref bean="authorizationInInterceptor"/>
+            <ref bean="authorizationInInterceptor" />
         </jaxrs:inInterceptors>
         <jaxrs:extensionMappings>
-            <entry key="feed" value="application/atom+xml"/>
-            <entry key="json" value="application/json"/>
-            <entry key="xml" value="application/xml"/>
-            <entry key="html" value="text/html"/>
+            <entry key="feed" value="application/atom+xml" />
+            <entry key="json" value="application/json" />
+            <entry key="xml" value="application/xml" />
+            <entry key="html" value="text/html" />
         </jaxrs:extensionMappings>
-    </jaxrs:server>-->
-
+        <jaxrs:providers>
+            <ref bean="jsonProvider" />
+        </jaxrs:providers>
+    </jaxrs:server>
 </beans>

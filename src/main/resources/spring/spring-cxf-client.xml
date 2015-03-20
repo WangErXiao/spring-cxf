@@ -18,7 +18,7 @@
     <bean id="helloService" class="com.yao.service.share.HelloService" factory-bean="clientFactory" factory-method="create" />
     <bean id="clientFactory" class="org.apache.cxf.jaxws.JaxWsProxyFactoryBean">
         <property name="serviceClass" value="com.yao.service.share.HelloService" />
-        <property name="address" value="http://localhost:9988/helloService?sign=wangerxiao" />
+        <property name="address" value="http://localhost:9988/helloService" />
         <property name="inInterceptors">
             <list>
                 <ref bean="authorizationOutInterceptor"/>
